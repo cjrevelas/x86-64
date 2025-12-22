@@ -1,8 +1,6 @@
 %include "macros.s"
 
-%define SYSCALL_WRITE 1
 %define SYSCALL_EXIT 60
-%define STD_OUT 1
 
 section .data                  ; data segment
 x dq 0
@@ -12,7 +10,7 @@ printf_format:  db "fact(%ld) = %ld", 0x0a, 0
 
 section .text                  ; code segment
     global main                ; declare "main" entry point for the linker
-    global fact                ; make fact routine globally accessible
+    global factorial           ; make fact routine globally accessible
     extern scanf               ; scanf from libc
     extern printf              ; printf from libc
 
@@ -52,7 +50,7 @@ print_number:
 ; Function to compute the factorial of
 ; an integer number
 ;
-fact:
+factorial:
     prologue
 
     sub rsp, 16       ; make room for the function's single argument
@@ -66,14 +64,12 @@ fact:
 greater:
     mov   [rsp+n], rdi
     dec   rdi
-    call  fact
+    call  factorial
     mov   rdi, [rsp+n]
     imul  rax, rdi
 
     epilogue
     
-
-
 ;
 ; Function that invokes the EXIT system call
 ; to terminate the program's execution.
@@ -93,7 +89,6 @@ exit:
 main:                          ; entry point
     call read_number           ; read an integer number from console
     mov  rdi, [x]              ; mov a to first argument of factorial call
-    call fact                  ; go to compute factorial
+    call factorial             ; go to compute factorial
     call print_number          ; print an integer number to the console
     call exit                  ; terminate program execution
-
