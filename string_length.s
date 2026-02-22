@@ -18,6 +18,7 @@
 
 section .data                  ; data segment
     str1 db "Hello, World!",0xa
+    str2 db "A random string to be printed",0xa
 
 section .text                  ; code segment
     global main              ; declare "main" entry point for the linker
@@ -40,21 +41,24 @@ exit:
 ; Inputs:
 ;    rdi: the string
 ;
+; Outputs:
+;    rax: the length of the string
+;
 string_length:
     prologue
-    lea rax, [str1]
     xor rcx, rcx
 .loop:
-    mov bl, [rax]
+    mov bl, [rdi]
     cmp bl, 0
     je .end_loop
     inc rcx
-    inc rax
+    inc rdi
     jmp .loop
 .end_loop: 
     mov rax, rcx
     epilogue
 
 main:                           ; entry point
+    lea  rdi, [str2]
     call string_length
     call exit
