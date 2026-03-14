@@ -6,30 +6,30 @@ section .data
 section .bss
 section .text
 
-global  c_area
-global  c_cmfrnce
+global  r_area
+global  r_cmfrnce
 
-c_area:
+r_area:
   push  rbp
   mov   rbp,  rsp
 
-  movsd xmm1, qword [pi]
-  mulsd xmm0, xmm0
-  mulsd xmm0, xmm1
+  mov   rax,  rsi
+  imul  rax,  rdi
 
   mov   rsp,  rbp
   pop   rbp
   ret
 
-c_cmfrnce:
+r_cmfrnce:
   push  rbp
   mov   rbp,  rsp
 
-  movsd xmm1, qword [pi]
-  addsd xmm0, xmm0
-  mulsd xmm0, xmm1
+  mov   rax,  rsi
+  add   rax,  rdi
+  add   rax,  rax
 
   mov   rsp,  rbp
   pop   rbp
   ret
+
 

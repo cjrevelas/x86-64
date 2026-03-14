@@ -46,7 +46,8 @@ main:
   call  r_area
   mov   rdi,  format_int
   mov   rsi,  rectangle_area
-  mov   rax,  1
+  mov   rdx,  rax
+  mov   rax,  0
   call  printf
 
   mov   rdi, qword [side1]
@@ -54,7 +55,8 @@ main:
   call  r_cmfrnce
   mov   rdi,  format_int
   mov   rsi,  rectangle_c
-  mov   rax,  1
+  mov   rdx,  rax
+  mov   rax,  0
   call  printf
 
   mov rsp,  rbp
